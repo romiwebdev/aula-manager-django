@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrasi</title>
+</head>
+<body>
+    <h1>Daftar Akun Baru</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Username:</label>
+        <input type="text" name="username" required><br>
+        <label>Email:</label>
+        <input type="email" name="email" required><br>
+        <label>Password:</label>
+        <input type="password" name="password1" required><br>
+        <label>Konfirmasi Password:</label>
+        <input type="password" name="password2" required><br>
+        <button type="submit">Daftar</button>
+    </form>
+    <a href="{% url 'user_login' %}">Sudah punya akun? Login di sini</a>
+</body>
+</html>

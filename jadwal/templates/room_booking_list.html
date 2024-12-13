@@ -1,0 +1,378 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Booking List{% endblock %}
+
+{% block content %}
+{% if messages %}
+<div style="padding: 1rem; background-color: #dff0d8; color: #3c763d; border: 1px solid #d6e9c6; margin-bottom: 1rem; border-radius: 5px;">
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            border-bottom: 3px solid #f5f5f5;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* Action buttons styling */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: auto;
+            min-width: 200px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            animation: fadeIn 0.3s;
+            padding: 15px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translate(-50%, -60%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        /* Form styling */
+        .modal form {
+            margin: 0;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 5px rgba(52,152,219,0.3);
+        }
+
+        /* Table styling */
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 50px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            min-width: 600px; /* Minimum width to ensure readability */
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                font-size: 1.3em;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            button {
+                width: 100%;
+                min-width: unset;
+                padding: 15px;
+            }
+
+            .modal-content {
+                padding: 20px;
+                margin: 10px;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            input {
+                padding: 15px; /* Larger touch targets */
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+
+            .close-modal {
+                width: 44px; /* Larger touch target */
+                height: 44px;
+            }
+
+            /* Custom scrollbar for table container */
+            .table-container {
+                margin: 15px -10px;
+                border-radius: 0;
+            }
+
+            .table-container::-webkit-scrollbar {
+                height: 6px;
+            }
+
+            .table-container::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+
+            .table-container::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 3px;
+            }
+
+            /* Add horizontal scroll indicator */
+            .table-scroll-hint {
+                display: block;
+                text-align: center;
+                color: #666;
+                font-size: 0.9em;
+                margin: 10px 0;
+            }
+        }
+
+        /* Additional touch-friendly improvements */
+        @media (hover: none) {
+            button:hover {
+                background-color: var(--primary); /* Remove hover effect on touch devices */
+            }
+
+            tr:hover {
+                background-color: inherit; /* Remove hover effect on touch devices */
+            }
+        }
+    </style>
+    <h1 id="pesanan">Jadwal Pemesanan Ruangan Aula Serba Guna</h1>
+    
+    <div class="action-buttons">
+        <a href="{% url 'room_booking_create' %}">
+            <button>Tambah Pesanan Baru</button>
+        </a>
+        <button onclick="openModal()">Edit atau Hapus Pesanan</button>
+    </div>
+    
+    <div id="verificationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2>Verifikasi Pesanan</h2>
+            <form method="GET" action="{% url 'verify_email_password' %}">
+                <label for="email">Email:</label>
+                <input type="email" name="email" required placeholder="Masukkan Email">
+                
+                <label for="password">Password:</label>
+                <input type="password" name="password" required placeholder="Masukkan Password">
+                
+                <button type="submit">Verifikasi dan Edit Pesanan</button>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+    <h2>Daftar Pemesanan</h2>
+    
+    <div class="table-scroll-hint">Geser ke kanan untuk melihat selengkapnya</div>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Acara</th>
+                    <th>Waktu Mulai</th>
+                    <th>Waktu Selesai</th>
+                    <th>Organization</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.event_name }}</td>
+                    <td>{{ booking.start_time }}</td>
+                    <td>{{ booking.end_time }}</td>
+                    <td>{{ booking.organization }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">Tidak ada pemesanan yang disetujui.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('verificationModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('verificationModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('verificationModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Mendeteksi apakah tabel bisa di-scroll
+        const tableContainer = document.querySelector('.table-container');
+        const scrollHint = document.querySelector('.table-scroll-hint');
+        
+        function updateScrollHintVisibility() {
+            if (tableContainer.scrollWidth > tableContainer.clientWidth) {
+                scrollHint.style.display = 'block';
+            } else {
+                scrollHint.style.display = 'none';
+            }
+        }
+
+        // Update saat halaman dimuat dan saat ukuran window berubah
+        window.addEventListener('load', updateScrollHintVisibility);
+        window.addEventListener('resize', updateScrollHintVisibility);
+    </script>
+    {% endblock %}

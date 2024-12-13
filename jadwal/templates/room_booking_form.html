@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemesanan Aula Serba Guna</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .back-button {
+            background-color: #95a5a6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #7f8c8d;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2rem;
+            flex-grow: 1;
+        }
+
+        h3 {
+            color: #2c3e50;
+            margin: 1.5rem 0 1rem 0;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="datetime-local"],
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52,152,219,0.3);
+        }
+
+        .payment-info {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+        }
+
+        .payment-info p {
+            margin-bottom: 0.8rem;
+        }
+
+        .file-upload {
+            margin: 1.5rem 0;
+        }
+
+        .file-upload input[type="file"] {
+            padding: 0.5rem;
+            border: 1px dashed #3498db;
+            border-radius: 5px;
+            width: 100%;
+            background: #f8f9fa;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            margin-bottom: .8rem;
+        }
+
+        button[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            
+            <h1>Form Pemesanan Ruangan Aula Serba Guna</h1>
+        </div>
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_event_name">Nama Acara</label>
+                {{ form.event_name }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_description">Deskripsi Acara</label>
+                {{ form.description }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_start_time">Waktu Mulai</label>
+                {{ form.start_time }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_end_time">Waktu Selesai</label>
+                {{ form.end_time }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_customer_name">Nama Pemesan</label>
+                {{ form.customer_name }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_phone_number">Nomor Telepon</label>
+                {{ form.phone_number }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_organization">Organisasi</label>
+                {{ form.organization }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_rental_price">Harga Sewa</label>
+                {{ form.rental_price }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                {{ form.email }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Password</label>
+                {{ form.password }}
+            </div>
+
+            <div class="payment-info">
+                <h3>Informasi Pembayaran</h3>
+                <p><strong>Nomor Rekening:</strong> 123-456-7890 (Bank XYZ)</p>
+                
+                <p><strong>Petunjuk Pembayaran:</strong></p>
+                <p>Silakan transfer sesuai dengan harga per jam dikali total waktu sewa.</p>
+                <p>Contoh: Jika harga per jam adalah 100.000 IDR dan durasi sewa Anda 3 jam, maka total yang perlu dibayar adalah 300.000 IDR.</p>
+            </div>
+            
+            <div class="file-upload">
+                <label for="payment_proof">Upload Bukti Pembayaran:</label>
+                <input type="file" name="payment_proof" accept="image/*" required>
+            </div>
+            
+            <div class="button-group">
+                <button type="submit">Buat Pemesanan</button>
+            </div>
+            <a href="{% url 'room_booking_list' %}" class="back-button">← Kembali ke Daftar</a>
+        </form>
+    </div>
+</body>
+</html>

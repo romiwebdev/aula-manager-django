@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Pesanan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .booking-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .booking-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e9ecef;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .booking-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .booking-title {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .edit-button {
+            background-color: #3498db;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            flex: 1;
+            max-width: 100px;
+            font-size: 0.9rem;
+        }
+
+        .edit-button:hover {
+            background-color: #2980b9;
+        }
+
+        .delete-button {
+            background-color: #e74c3c;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            flex: 1;
+            max-width: 100px;
+            font-size: 0.9rem;
+        }
+
+        .delete-button:hover {
+            background-color: #c0392b;
+        }
+
+        .no-bookings {
+            text-align: center;
+            color: #666;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .button-group {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .booking-title {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Edit atau Hapus Pesanan</h1>
+            <p class="description">Silakan pilih salah satu pemesanan untuk diedit atau dihapus.</p>
+        </div>
+        
+        {% if bookings %}
+        <ul class="booking-list">
+            {% for booking in bookings %}
+            <li class="booking-item">
+                <h3 class="booking-title">{{ booking.event_name }} - {{ booking.customer_name }}</h3>
+                <div class="button-group">
+                    <form action="{% url 'room_booking_edit' booking.id %}" method="GET" style="flex: 1; max-width: 100px;">
+                        <button type="submit" class="edit-button">Edit</button>
+                    </form>
+                    <form action="{% url 'room_booking_cancel' booking.id %}" method="POST" style="flex: 1; max-width: 100px;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button">Hapus</button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="no-bookings">
+            <p>Tidak ada pemesanan yang tersedia.</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

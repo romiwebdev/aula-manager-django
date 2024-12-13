@@ -1,0 +1,619 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}Pemesanan Ruangan Aula Serba Guna{% endblock %}
+    </title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #3498db;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+      }
+
+      .header {
+        background-color: #fff;
+        padding: 10px 0;
+        border-bottom: 1px solid #eaeaea;
+      }
+
+      .header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .header .contact-info {
+        display: flex;
+        align-items: center;
+      }
+
+      .header .contact-info i {
+        margin-right: 5px;
+      }
+
+      .header .contact-info div {
+        margin-right: 20px;
+        display: flex;
+        align-items: center;
+      }
+
+      .header .social-icons {
+        display: flex;
+        align-items: center;
+      }
+
+      .header .social-icons a {
+        margin-left: 10px;
+        color: #333;
+      }
+
+      .navbar {
+        background-color: #fff;
+        padding: 10px 0;
+        border-bottom: 1px solid #eaeaea;
+      }
+
+      .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .navbar .logo {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .navbar .nav-links {
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar .nav-links a {
+        margin-left: 20px;
+        color: #333;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .navbar .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      .navbar .schedule-visit {
+        background-color: var(--primary);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .navbar .hamburger {
+        display: none;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .hero {
+        position: relative;
+        background-image: url("{% static 'images/aula.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        height: 600px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .hero .location {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+
+      .hero .location span {
+        color: #fff;
+      }
+
+      .hero h1 {
+        font-size: 48px;
+        font-weight: bold;
+        margin: 0;
+        color: white;
+        position: relative;
+        padding: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Bayangan teks */
+      }
+
+      .hero h1::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4); /* Latar belakang gelap */
+        z-index: -1;
+      }
+
+      /* Updated Container Styles */
+      .container {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        gap: 30px;
+      }
+
+      .left-content {
+        flex: 1;
+        max-width: 45%;
+      }
+
+      .left-content img {
+        width: 100%;
+        height: 500px;
+        border-radius: 10px;
+      }
+
+      .center-content {
+        flex: 1;
+        max-width: 35%;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .center-content h2 {
+        color: var(--primary);
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .center-content h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+      }
+
+      .center-content p {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .center-content .links {
+        margin-top: 20px;
+      }
+
+      .center-content .links a {
+        display: block;
+        color: var(--primary);
+        text-decoration: none;
+        margin-bottom: 10px;
+      }
+
+      .info-box {
+        flex: 1;
+        max-width: 20%;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .info-box div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .info-box div i {
+        font-size: 24px;
+        color: var(--primary);
+        margin-right: 10px;
+      }
+
+      .info-box div p {
+        margin: 0;
+      }
+
+      .info-box div p span {
+        display: block;
+        font-size: 12px;
+        color: #666;
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .contact-info .info-box {
+        background-color: white;
+        padding: 20px;
+        margin: 0 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .contact-info .info-box i {
+        font-size: 24px;
+        color: var(--primary);
+      }
+
+      .contact-info .info-box p {
+        margin: 10px 0 0;
+        font-size: 16px;
+      }
+
+      .footer {
+        background-color: #fff;
+        padding: 20px 0;
+        text-align: center;
+        border-top: 1px solid #eaeaea;
+      }
+
+      .footer p {
+        margin: 0;
+        color: #666;
+      }
+
+      /* Media Queries */
+      @media (max-width: 768px) {
+        .navbar .nav-links {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 60px;
+          left: 0;
+          width: 100%;
+          background-color: #fff;
+          border-top: 1px solid #eaeaea;
+        }
+
+        .navbar .nav-links a {
+          margin: 10px 0;
+          text-align: center;
+        }
+
+        .navbar .hamburger {
+          display: block;
+        }
+
+        .container {
+          flex-direction: column;
+        }
+
+        .left-content,
+        .center-content,
+        .info-box {
+          max-width: 100%;
+          margin-bottom: 20px;
+        }
+
+        .left-content img {
+          width: 100%;
+          height: 50px;
+        }
+
+        .contact-info {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .contact-info .info-box {
+          width: 100%;
+          margin: 10px 0;
+        }
+      }
+    </style>
+    <style>
+      .villa-contact-section {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        background-color: #f4f7f6;
+        padding: 4rem 0;
+      }
+
+      .villa-contact-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 0 15px;
+      }
+
+      .villa-contact-header {
+        font-size: 3rem;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        position: relative;
+      }
+
+      .villa-contact-underline {
+        width: 100px;
+        height: 4px;
+        background-color: #007bff;
+        margin: 0 auto 3rem;
+        border-radius: 2px;
+      }
+
+      .villa-contact-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .villa-contact-item {
+        display: flex;
+        align-items: center;
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        width: 100%;
+        max-width: 450px;
+      }
+
+      .villa-contact-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      }
+
+      .villa-contact-icon-container {
+        background-color: rgba(0, 123, 255, 0.1);
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1.5rem;
+      }
+
+      .villa-contact-icon {
+        color: #007bff;
+        font-size: 2rem;
+      }
+
+      .villa-contact-content {
+        flex-grow: 1;
+        text-align: left;
+      }
+
+      .villa-contact-title {
+        margin: 0 0 0.5rem 0;
+        color: #2c3e50;
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+
+      .villa-contact-link {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 0.3rem;
+        transition: color 0.3s ease;
+      }
+
+      .villa-contact-link:hover {
+        color: #0056b3;
+      }
+
+      .villa-contact-subtitle {
+        display: block;
+        color: #6c757d;
+        font-size: 0.9rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        .villa-contact-wrapper {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .villa-contact-item {
+          max-width: 100%;
+          width: 90%;
+          margin-bottom: 1.5rem;
+        }
+
+        .villa-contact-header {
+          font-size: 2.5rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .villa-contact-section {
+          min-height: 50vh;
+          padding: 2rem 0;
+        }
+
+        .villa-contact-header {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  {% load static %}
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="contact-info">
+          <div>
+            <i class="fas fa-envelope"></i>
+            <span>rominsmaga@gmail.com</span>
+          </div>
+          <div>
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Bojonegoro, No 33160</span>
+          </div>
+        </div>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </header>
+    <nav class="navbar">
+      <div class="container">
+        <div class="logo">AULA SERBA GUNA</div>
+        <div class="nav-links">
+          <a href="{% url 'room_booking_list' %}">Beranda</a>
+          <!-- Mengarah ke daftar pesanan -->
+          <a href="#about">Tentang Kami</a>
+          <a href="{% url 'room_booking_create' %}">Pemesanan</a>
+          <!-- Mengarah ke form pemesanan -->
+          <a href="#contact">Hubungi Kami</a>
+          <a href="#pesanan" class="schedule-visit">Jadwal Ruangan</a>
+          <!-- Mengarah ke daftar pesanan -->
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </nav>
+    <section class="hero">
+      <div>
+        <h1>BUTUH RUANGAN?<br />PESAN SEKARANG!</h1>
+      </div>
+    </section>
+
+    <div id="about" class="container">
+      <div class="left-content">
+        {% load static %}
+<img alt="Interior view of a modern apartment with a sea view"src="{% static 'images/aula2.jpg' %}"/>
+
+      </div>
+      <div class="center-content">
+        <h2>FITUR UTAMA</h2>
+        <h1>Aula Serba Guna Terbaik</h1>
+        <p>
+          Temukan pengalaman terbaik untuk acara Anda dengan Aula Serba Guna
+          kami yang dilengkapi dengan fasilitas modern. Kami menyediakan ruang
+          yang luas dan nyaman untuk berbagai jenis acara, mulai dari seminar,
+          pernikahan, hingga acara perusahaan. Nikmati kenyamanan dan pelayanan
+          terbaik dari kami.
+        </p>
+        <div class="links">
+          <a href="#">Bagaimana cara pemesanan?</a>
+          <a href="#">Kenapa Aula Serba Guna kami adalah pilihan terbaik?</a>
+        </div>
+      </div>
+      <div class="info-box">
+        <div>
+          <i class="fas fa-ruler-combined"></i>
+          <p>500 m2<span>Luasan Total Ruangan</span></p>
+        </div>
+        <div>
+          <i class="fas fa-file-contract"></i>
+          <p>Kontrak<span>Siap dengan Kontrak Resmi</span></p>
+        </div>
+        <div>
+          <i class="fas fa-money-check-alt"></i>
+          <p>Pembayaran<span>Proses Pembayaran Mudah</span></p>
+        </div>
+        <div>
+          <i class="fas fa-shield-alt"></i>
+          <p>Keamanan<span>Keamanan 24/7 Dijamin</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Konten Utama -->
+    {% block content %}
+
+    <!-- Konten dari template lain akan dimasukkan di sini -->
+    {% endblock %}
+
+    <section id="contact" class="villa-contact-section">
+      <div class="villa-contact-container">
+        <h1 class="villa-contact-header">Contact Us</h1>
+        <div class="villa-contact-underline"></div>
+
+        <div class="villa-contact-wrapper">
+          <div class="villa-contact-item">
+            <div class="villa-contact-icon-container">
+              <i class="fas fa-phone-alt villa-contact-icon"></i>
+            </div>
+            <div class="villa-contact-content">
+              <h4 class="villa-contact-title">Contact Number</h4>
+              <a href="tel:+01002003040" class="villa-contact-link">
+                +62 834 6354 3647
+              </a>
+              <span class="villa-contact-subtitle"
+                >Tersedia pukul 7 pagi - 5 sore WIB</span
+              >
+            </div>
+          </div>
+          <div class="villa-contact-item">
+            <div class="villa-contact-icon-container">
+              <i class="fas fa-envelope villa-contact-icon"></i>
+            </div>
+            <div class="villa-contact-content">
+              <h4 class="villa-contact-title">Email Bisnis</h4>
+              <a href="mailto:info@villa.co" class="villa-contact-link">
+                info@aula.com
+              </a>
+              <span class="villa-contact-subtitle"
+                >Kirimkan pertanyaan Anda kepada kami</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <p>&copy; 2024 Muhromin. Semua hak cipta dilindungi.</p>
+      <p>Ikuti kami di media sosial untuk pembaruan!</p>
+    </footer>
+    <script>
+      function toggleMenu() {
+        const navLinks = document.querySelector(".nav-links");
+        navLinks.style.display =
+          navLinks.style.display === "flex" ? "none" : "flex";
+      }
+    </script>
+  </body>
+</html>
