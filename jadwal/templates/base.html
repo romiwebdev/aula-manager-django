@@ -29,8 +29,13 @@
 
       .header {
         background-color: #fff;
-        padding: 10px 0;
+        padding: 2px 0;
         border-bottom: 1px solid #eaeaea;
+        position: fixed; /* Membuat header tetap di atas */
+    top: 0; /* Menempatkan header di bagian atas */
+    left: 0; /* Menempatkan header di sisi kiri */
+    right: 0; /* Menempatkan header di sisi kanan */
+    z-index: 1000; 
       }
 
       .header .container {
@@ -70,7 +75,14 @@
       .navbar {
         background-color: #fff;
         padding: 10px 0;
-        border-bottom: 1px solid #eaeaea;
+        position: fixed;
+        z-index: 9999;
+        width: 100%;
+        position: fixed; /* Membuat navbar tetap di atas */
+    top: 70px; /* Menempatkan navbar di bawah header (sesuaikan dengan tinggi header) */
+    left: 0; /* Menempatkan navbar di sisi kiri */
+    right: 0; /* Menempatkan navbar di sisi kanan */
+    z-index: 999;
       }
 
       .navbar .container {
@@ -123,6 +135,7 @@
         background-image: url("{% static 'images/aula.jpg' %}");
         background-size: cover;
         background-position: center;
+        margin-top: 8%;
         height: 600px;
         color: #fff;
         display: flex;

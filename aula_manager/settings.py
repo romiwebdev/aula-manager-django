@@ -25,8 +25,10 @@ SECRET_KEY = 'django-insecure-cz!*v#(j%%bt@7_i=lrj478ff)na6kf@zlz2&5-#j_nt@viqd2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    "https://93x6uhha-xs0cpnn7-tyild8loh2r7.ac4-preview.marscode.dev",
+]
 
 # Application definition
 
